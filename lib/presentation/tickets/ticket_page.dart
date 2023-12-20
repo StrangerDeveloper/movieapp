@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 
 import 'bloc/ticket_bloc.dart';
 import 'models/ticket_item_model.dart';
-import 'models/ticket_model.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/core/app_export.dart';
 import 'package:movieapp/widgets/custom_elevated_button.dart';
@@ -70,18 +69,18 @@ class TicketPage extends StatelessWidget {
       Column(children: [
         SizedBox(
             height: 145.v,
-            child: BlocSelector<TicketBloc, TicketState, TicketModel?>(
-                selector: (state) => state.ticketModel,
-                builder: (context, sixModelObj) {
+            child: BlocBuilder<TicketBloc, TicketState>(
+                
+                builder: (context, state) {
                   return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       separatorBuilder: (context, index) {
                         return SizedBox(width: 10.h);
                       },
-                      itemCount: sixModelObj?.ticketItemList!.length ?? 0,
+                      itemCount: state.ticketModel?.ticketItemList!.length ?? 0,
                       itemBuilder: (context, index) {
                         TicketItemModel model =
-                            sixModelObj?.ticketItemList![index] ??
+                            state.ticketModel?.ticketItemList![index] ??
                                 TicketItemModel();
                         return TicketItemWidget(model);
                       });
