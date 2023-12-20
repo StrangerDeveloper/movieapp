@@ -1,4 +1,3 @@
-
 import 'bloc/ticket_details_bloc.dart';
 import 'models/ticket_details_item_model.dart';
 import 'models/ticket_details_model.dart';
@@ -15,13 +14,22 @@ class TicketDetailsScreen extends StatelessWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider<TicketDetailsBloc>(
-        create: (context) => TicketDetailsBloc(TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
+        create: (context) => TicketDetailsBloc(
+            TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
           ..add(TicketDetailsInitialEvent()),
         child: TicketDetailsScreen());
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider<TicketDetailsBloc>(
+        create: (context) => TicketDetailsBloc(
+            TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
+          ..add(TicketDetailsInitialEvent()),
+        child: body(context));
+  }
+
+  Widget body(context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
@@ -64,57 +72,57 @@ class TicketDetailsScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildStackImageText(BuildContext context) {
     return SizedBox(
-        height: 76.v,
-        width: double.maxFinite,
-        child: Stack(alignment: Alignment.topLeft, children: [
-          Align(
-              alignment: Alignment.center,
-              child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.h, vertical: 11.v),
-                  decoration: AppDecoration.outlineOnPrimaryContainer,
-                  child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 2.v),
-                        Row(children: [
-                          CustomImageView(
-                              imagePath:
-                                  ImageConstant.imgArrowLeftErrorcontainer,
-                              height: 30.adaptSize,
-                              width: 30.adaptSize,
-                              onTap: () {
-                                onTapImgArrowLeft(context);
-                              }),
-                          Padding(
-                              padding: EdgeInsets.only(left: 84.h, top: 5.v),
-                              child: Text("Movie 2",
-                                  style: CustomTextStyles
-                                      .titleMediumPrimaryContainer_1))
-                        ]),
-                        Align(
-                            alignment: Alignment.center,
-                            child: RichText(
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                      text: "5-march-2021",
-                                      style:
-                                          CustomTextStyles.labelLargePrimary_2),
-                                  TextSpan(
-                                      text: "12:30 Hall 1",
-                                      style: CustomTextStyles.labelLargePrimary)
-                                ]),
-                                textAlign: TextAlign.left))
-                      ]))),
-          CustomImageView(
-              imagePath: ImageConstant.imgArrowLeftErrorcontainer,
-              height: 30.adaptSize,
-              width: 30.adaptSize,
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 13.h, top: 15.v))
-        ]));
+      height: 76.v,
+      width: double.maxFinite,
+      child: Stack(alignment: Alignment.topLeft, children: [
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 11.v),
+            decoration: AppDecoration.outlineOnPrimaryContainer,
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 2.v),
+                  Row(children: [
+                    CustomImageView(
+                        imagePath: ImageConstant.imgArrowLeftErrorcontainer,
+                        height: 30.adaptSize,
+                        width: 30.adaptSize,
+                        onTap: () {
+                          onTapImgArrowLeft(context);
+                        }),
+                    Padding(
+                        padding: EdgeInsets.only(left: 84.h, top: 5.v),
+                        child: Text("Movie 2",
+                            style:
+                                CustomTextStyles.titleMediumPrimaryContainer_1))
+                  ]),
+                  Align(
+                      alignment: Alignment.center,
+                      child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "5-march-2021",
+                                style: CustomTextStyles.labelLargePrimary_2),
+                            TextSpan(
+                                text: "12:30 Hall 1",
+                                style: CustomTextStyles.labelLargePrimary)
+                          ]),
+                          textAlign: TextAlign.left))
+                ]),
+          ),
+        ),
+        CustomImageView(
+            imagePath: ImageConstant.imgArrowLeftErrorcontainer,
+            height: 30.adaptSize,
+            width: 30.adaptSize,
+            alignment: Alignment.topLeft,
+            margin: EdgeInsets.only(left: 13.h, top: 15.v))
+      ]),
+    );
   }
 
   /// Section Widget
@@ -288,9 +296,10 @@ class TicketDetailsScreen extends StatelessWidget {
                         SizedBox(height: 8.v),
                         Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12.h),
-                            child: BlocSelector<TicketDetailsBloc, TicketDetailsState,
-                                    TicketDetailsModel?>(
-                                selector: (state) => state.ticketDetailsModelObj,
+                            child: BlocSelector<TicketDetailsBloc,
+                                    TicketDetailsState, TicketDetailsModel?>(
+                                selector: (state) =>
+                                    state.ticketDetailsModelObj,
                                 builder: (context, ticketDetailsModelObj) {
                                   return GridView.builder(
                                       shrinkWrap: true,
@@ -301,13 +310,15 @@ class TicketDetailsScreen extends StatelessWidget {
                                               mainAxisSpacing: 5.h,
                                               crossAxisSpacing: 5.h),
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          ticketDetailsModelObj?.ticketDetailsItemList.length ??
-                                              0,
+                                      itemCount: ticketDetailsModelObj
+                                              ?.ticketDetailsItemList.length ??
+                                          0,
                                       itemBuilder: (context, index) {
-                                        TicketDetailsItemModel model = ticketDetailsModelObj
-                                                ?.ticketDetailsItemList[index] ??
-                                            TicketDetailsItemModel();
+                                        TicketDetailsItemModel model =
+                                            ticketDetailsModelObj
+                                                        ?.ticketDetailsItemList[
+                                                    index] ??
+                                                TicketDetailsItemModel();
                                         return TicketDetailsItemWidget(model);
                                       });
                                 })),
@@ -485,7 +496,8 @@ class TicketDetailsScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(right: 81.h),
                         child: Row(children: [
-                          BlocSelector<TicketDetailsBloc, TicketDetailsState, bool?>(
+                          BlocSelector<TicketDetailsBloc, TicketDetailsState,
+                                  bool?>(
                               selector: (state) => state.selected,
                               builder: (context, selected) {
                                 return CustomCheckboxButton(
@@ -498,7 +510,8 @@ class TicketDetailsScreen extends StatelessWidget {
                               }),
                           Padding(
                               padding: EdgeInsets.only(left: 60.h),
-                              child: BlocSelector<TicketDetailsBloc, TicketDetailsState, bool?>(
+                              child: BlocSelector<TicketDetailsBloc,
+                                      TicketDetailsState, bool?>(
                                   selector: (state) => state.notavailable,
                                   builder: (context, notavailable) {
                                     return CustomCheckboxButton(
@@ -515,7 +528,8 @@ class TicketDetailsScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(right: 75.h),
                         child: Row(children: [
-                          BlocSelector<TicketDetailsBloc, TicketDetailsState, bool?>(
+                          BlocSelector<TicketDetailsBloc, TicketDetailsState,
+                                  bool?>(
                               selector: (state) => state.vip,
                               builder: (context, vip) {
                                 return CustomCheckboxButton(
@@ -528,7 +542,8 @@ class TicketDetailsScreen extends StatelessWidget {
                               }),
                           Padding(
                               padding: EdgeInsets.only(left: 52.h),
-                              child: BlocSelector<TicketDetailsBloc, TicketDetailsState, bool?>(
+                              child: BlocSelector<TicketDetailsBloc,
+                                      TicketDetailsState, bool?>(
                                   selector: (state) => state.regularFifty,
                                   builder: (context, regularFifty) {
                                     return CustomCheckboxButton(
