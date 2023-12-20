@@ -19,7 +19,7 @@ class TicketPage extends StatelessWidget {
         child: Scaffold(
       body: BlocProvider(
         create: (context) => TicketBloc(
-            TicketState(ticketModel: TicketModel(ticketItemList: [])))
+            TicketState())
           ..add(SixInitialEvent()),
         child: Container(
           width: double.maxFinite,

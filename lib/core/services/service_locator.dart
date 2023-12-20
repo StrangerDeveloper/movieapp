@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:movieapp/data/apiClient/repo.dart';
+import 'package:movieapp/data/repo.dart';
 import 'package:movieapp/presentation/home/bloc/movie_bloc.dart';
 import 'package:movieapp/presentation/movie_details/bloc/movie_detail_bloc.dart';
 import 'package:movieapp/presentation/movie_details/widgets/bloc/video_player_bloc.dart';
