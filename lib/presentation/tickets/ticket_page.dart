@@ -18,7 +18,8 @@ class TicketPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       body: BlocProvider(
-        create: (context) => TicketBloc(TicketState(sixModelObj: TicketModel(ticketItemList: [])))
+        create: (context) => TicketBloc(
+            TicketState(ticketModel: TicketModel(ticketItemList: [])))
           ..add(SixInitialEvent()),
         child: Container(
           width: double.maxFinite,
@@ -70,17 +71,17 @@ class TicketPage extends StatelessWidget {
         SizedBox(
             height: 145.v,
             child: BlocSelector<TicketBloc, TicketState, TicketModel?>(
-                selector: (state) => state.sixModelObj,
+                selector: (state) => state.ticketModel,
                 builder: (context, sixModelObj) {
                   return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       separatorBuilder: (context, index) {
                         return SizedBox(width: 10.h);
                       },
-                      itemCount: sixModelObj?.ticketItemList.length ?? 0,
+                      itemCount: sixModelObj?.ticketItemList!.length ?? 0,
                       itemBuilder: (context, index) {
                         TicketItemModel model =
-                            sixModelObj?.ticketItemList[index] ??
+                            sixModelObj?.ticketItemList![index] ??
                                 TicketItemModel();
                         return TicketItemWidget(model);
                       });

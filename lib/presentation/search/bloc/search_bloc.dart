@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:movieapp/core/utils/enums.dart';
-import 'package:movieapp/data/apiClient/repo.dart';
+import 'package:movieapp/data/repo.dart';
 import 'package:movieapp/presentation/search/models/search_result_item_model.dart';
 import 'package:stream_transform/stream_transform.dart';
 

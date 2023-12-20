@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:movieapp/core/utils/enums.dart';
-import 'package:movieapp/data/apiClient/repo.dart';
+import 'package:movieapp/data/repo.dart';
 import 'package:movieapp/presentation/home/models/movie_model.dart';
 import '/core/app_export.dart';
 part 'movie_event.dart';

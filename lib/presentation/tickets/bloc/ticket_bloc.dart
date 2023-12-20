@@ -17,7 +17,7 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
   ) async {
     emit(state.copyWith(
         sixModelObj:
-            state.sixModelObj?.copyWith(ticketItemList: fillSixItemList())));
+            state.ticketModel?.copyWith(ticketItemList: fillSixItemList())));
   }
 
   List<TicketItemModel> fillSixItemList() {

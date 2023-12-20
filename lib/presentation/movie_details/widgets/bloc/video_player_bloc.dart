@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/core/utils/enums.dart';
-import 'package:movieapp/data/apiClient/repo.dart';
+import 'package:movieapp/data/repo.dart';
 
 import 'video_player_event.dart';
 import 'video_player_state.dart';
