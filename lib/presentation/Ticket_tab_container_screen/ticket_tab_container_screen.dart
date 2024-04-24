@@ -39,36 +39,35 @@ class TicketTabContainerScreenState extends State<TicketTabContainerScreen>
   Widget body() {
     mediaQueryData = MediaQuery.of(context);
     return BlocBuilder<TicketTabContainerBloc, TicketTabContainerState>(
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            body: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                children: [
-                  _buildPlaylist(context),
-                  SizedBox(height: 92.v),
-                  _buildClientTestimonials(context),
-                  SizedBox(
-                    height: 532.v,
-                    child: TabBarView(
-                      controller: tabviewController,
-                      children: [
-                        TicketPage(),
-                        TicketPage(),
-                        TicketPage(),
-                        TicketPage(),
-                        TicketPage(),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+        builder: (context, state) {
+      return SafeArea(
+        child: Scaffold(
+          body: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              children: [
+                _buildPlaylist(context),
+                SizedBox(height: 92.v),
+                _buildClientTestimonials(context),
+                SizedBox(
+                  height: 532.v,
+                  child: TabBarView(
+                    controller: tabviewController,
+                    children: [
+                      TicketPage(),
+                      TicketPage(),
+                      TicketPage(),
+                      TicketPage(),
+                      TicketPage(),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 
   Widget _buildPlaylist(BuildContext context) {
