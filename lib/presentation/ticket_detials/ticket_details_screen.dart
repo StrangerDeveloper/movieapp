@@ -14,19 +14,21 @@ class TicketDetailsScreen extends StatelessWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider<TicketDetailsBloc>(
-        create: (context) => TicketDetailsBloc(
-            TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
-          ..add(TicketDetailsInitialEvent()),
-        child: TicketDetailsScreen());
+      create: (context) => TicketDetailsBloc(
+          TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
+        ..add(TicketDetailsInitialEvent()),
+      child: TicketDetailsScreen(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TicketDetailsBloc>(
-        create: (context) => TicketDetailsBloc(
-            TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
-          ..add(TicketDetailsInitialEvent()),
-        child: body(context));
+      create: (context) => TicketDetailsBloc(
+          TicketDetailsState(ticketDetailsModelObj: TicketDetailsModel()))
+        ..add(TicketDetailsInitialEvent()),
+      child: body(context),
+    );
   }
 
   Widget body(context) {
@@ -38,9 +40,10 @@ class TicketDetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               _buildStackImageText(context),
-              SizedBox(height: 42.v),
-              _buildSixtySeven(context),
-              SizedBox(height: 50.v),
+              Padding(
+                padding: EdgeInsets.only(top: 42.v, bottom: 50.v),
+                child: _buildMainFrame(context),
+              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
@@ -78,7 +81,6 @@ class TicketDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
   Widget _buildStackImageText(BuildContext context) {
     return SizedBox(
       height: 76.v,
@@ -121,11 +123,13 @@ class TicketDetailsScreen extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                                text: "5-march-2021",
-                                style: CustomTextStyles.labelLargePrimary_2),
+                              text: "5-march-2021",
+                              style: CustomTextStyles.labelLargePrimary_2,
+                            ),
                             TextSpan(
-                                text: "12:30 Hall 1",
-                                style: CustomTextStyles.labelLargePrimary)
+                              text: "12:30 Hall 1",
+                              style: CustomTextStyles.labelLargePrimary,
+                            ),
                           ],
                         ),
                         textAlign: TextAlign.left),
@@ -146,8 +150,7 @@ class TicketDetailsScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  Widget _buildSixtySeven(BuildContext context) {
+  Widget _buildMainFrame(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(

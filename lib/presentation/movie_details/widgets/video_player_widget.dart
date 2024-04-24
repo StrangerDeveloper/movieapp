@@ -3,9 +3,11 @@ import 'package:movieapp/core/resources/app_colors.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayerWideget extends StatefulWidget {
-  const VideoPlayerWideget(
-      {Key? key, required this.videoId, required this.movieTitle})
-      : super(key: key);
+  const VideoPlayerWideget({
+    Key? key,
+    required this.videoId,
+    required this.movieTitle,
+  }) : super(key: key);
   final String? videoId;
   final String movieTitle;
 

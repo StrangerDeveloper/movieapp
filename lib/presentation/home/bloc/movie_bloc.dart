@@ -20,9 +20,6 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   ) async {
     emit(state.copyWith(status: RequestStatus.loading));
     final result = await _movieRepository.getUpCommingMovies();
-    // emit(
-    //   state.copyWith(status: RequestStatus.loaded, movies: result)
-    // );
 
     result.fold(
       (initial) => emit(

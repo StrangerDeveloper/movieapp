@@ -15,7 +15,6 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
   return (events, mapper) => events.debounce(duration).switchMap(mapper);
 }
 
-/// A bloc that manages the state of a Two according to the event that is dispatched to it.
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final MovieRepository movieRepository;
 
@@ -96,12 +95,5 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         );
       }
     });
-    // emit(state.copyWith(
-    //   searchController: TextEditingController(),
-    // ));
-    // emit(state.copyWith(
-    //     twoModelObj: state.twoModelObj?.copyWith(
-    //   gridItemList: fillGridItemList(),
-    // )));
   }
 }

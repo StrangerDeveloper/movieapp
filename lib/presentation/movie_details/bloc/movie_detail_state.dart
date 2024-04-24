@@ -1,6 +1,5 @@
 part of 'movie_detail_bloc.dart';
 
-/// Represents the state of MovieDetails in the application.
 class MovieDetailState extends Equatable {
   MovieDetailState({
     this.movieDetailsModel,

@@ -41,29 +41,30 @@ class SeachScreen extends StatelessWidget {
                   SizedBox(height: 30.v),
                   _buildSearchResultsText(state.searchResult),
                   BlocBuilder<SearchBloc, SearchState>(
-                      builder: (context, state) {
-                    switch (state.status) {
-                      case SearchRequestStatus.empty:
-                        return Expanded(
-                          child: _buildGrid(context, state.gridItemList),
-                        );
-                      case SearchRequestStatus.loading:
-                        return const Expanded(
-                            child: Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primary,
-                          ),
-                        ));
-                      case SearchRequestStatus.loaded:
-                        return _buildSearchGrid(results: state.searchResult);
-                      case SearchRequestStatus.error:
-                        return const Expanded(child: Text('Error'));
-                      case SearchRequestStatus.noResults:
-                        return const NoResult();
-                      case null:
-                        return _buildGrid(context, state.gridItemList);
-                    }
-                  }),
+                    builder: (context, state) {
+                      switch (state.status) {
+                        case SearchRequestStatus.empty:
+                          return Expanded(
+                            child: _buildGrid(context, state.gridItemList),
+                          );
+                        case SearchRequestStatus.loading:
+                          return const Expanded(
+                              child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          ));
+                        case SearchRequestStatus.loaded:
+                          return _buildSearchGrid(results: state.searchResult);
+                        case SearchRequestStatus.error:
+                          return const Expanded(child: Text('Error'));
+                        case SearchRequestStatus.noResults:
+                          return const NoResult();
+                        case null:
+                          return _buildGrid(context, state.gridItemList);
+                      }
+                    },
+                  ),
                 ],
               );
             },
@@ -82,7 +83,6 @@ class SeachScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.bold,
-            //color: AppColors.primary,
           ),
         ),
       );
@@ -91,7 +91,6 @@ class SeachScreen extends StatelessWidget {
     }
   }
 
-  /// Section Widget
   Widget _buildGrid(BuildContext context, List<GridItemModel> list) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.h),

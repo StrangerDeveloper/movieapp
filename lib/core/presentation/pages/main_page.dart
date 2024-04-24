@@ -16,27 +16,31 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PopScope(
-          canPop: false,
-          onPopInvoked: (didPop) async {
-            final String location = GoRouterState.of(context).matchedLocation;
-            if (!location.startsWith(homePath)) {
-              _onItemTapped(0, context);
-            }
-            return;
-          },
-          child: widget.child!,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) async {
+          final String location = GoRouterState.of(context).matchedLocation;
+          if (!location.startsWith(homePath)) {
+            _onItemTapped(0, context);
+          }
+          return;
+        },
+        child: widget.child!,
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _getSelectedIndex(context),
+        onTap: (index) => _onItemTapped(index, context),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.goNamed(AppRoutes.mqttScreen);
+        },
+        child: Text(
+          'MQTT',
+          style: TextStyle(color: Colors.black),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          selectedIndex: _getSelectedIndex(context),
-          onTap: (index) => _onItemTapped(index, context),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.goNamed(AppRoutes.mqttScreen);
-          },
-          child: const Icon(Icons.message),
-        ));
+      ),
+    );
   }
 
   int _getSelectedIndex(BuildContext context) {
@@ -46,15 +50,7 @@ class _MainPageState extends State<MainPage> {
     } else if (location.startsWith(searchPath)) {
       return 1;
     }
-    // if (location.startsWith(tvShowsPath)) {
-    //   return 1;
-    // }
-    // if (location.startsWith(searchPath)) {
-    //   return 2;
-    // }
-    // if (location.startsWith(watchlistPath)) {
-    //   return 3;
-    // }
+
     return 0;
   }
 
@@ -66,12 +62,7 @@ class _MainPageState extends State<MainPage> {
       case 1:
         context.goNamed(AppRoutes.searchRoute);
         break;
-      // case 2:
-      //   context.goNamed(AppRoutes.searchRoute);
-      //   break;
-      // case 3:
-      //   context.goNamed(AppRoutes.watchlistRoute);
-      //   break;
+
       default:
         context.goNamed(AppRoutes.homeRoute);
         break;

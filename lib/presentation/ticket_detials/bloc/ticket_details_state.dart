@@ -2,7 +2,6 @@
 
 part of 'ticket_details_bloc.dart';
 
-/// Represents the state of TicketDetails in the application.
 class TicketDetailsState extends Equatable {
   TicketDetailsState({
     this.selected = false,
@@ -42,7 +41,8 @@ class TicketDetailsState extends Equatable {
       notavailable: notavailable ?? this.notavailable,
       vip: vip ?? this.vip,
       regularFifty: regularFifty ?? this.regularFifty,
-      ticketDetailsModelObj: ticketDetailsModelObj ?? this.ticketDetailsModelObj,
+      ticketDetailsModelObj:
+          ticketDetailsModelObj ?? this.ticketDetailsModelObj,
     );
   }
 }

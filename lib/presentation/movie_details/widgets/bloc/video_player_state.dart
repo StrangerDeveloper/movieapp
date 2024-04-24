@@ -15,8 +15,7 @@ class VideoPlayerState extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [status, message, videoList]; // Check if any of these are null
+  List<Object?> get props => [status, message, videoList];
 
   VideoPlayerState copyWith({
     RequestStatus? status,

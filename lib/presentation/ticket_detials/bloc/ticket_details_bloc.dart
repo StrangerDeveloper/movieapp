@@ -5,7 +5,6 @@ import '../models/ticket_details_item_model.dart';
 part 'ticket_details_event.dart';
 part 'ticket_details_state.dart';
 
-/// A bloc that manages the state of a Seven according to the event that is dispatched to it.
 class TicketDetailsBloc extends Bloc<TicketDetailsEvent, TicketDetailsState> {
   TicketDetailsBloc(TicketDetailsState initialState) : super(initialState) {
     on<TicketDetailsInitialEvent>(_onInitialize);
@@ -74,7 +73,8 @@ class TicketDetailsBloc extends Bloc<TicketDetailsEvent, TicketDetailsState> {
       TicketDetailsItemModel(contrast: ImageConstant.imgContrast),
       TicketDetailsItemModel(contrast: ImageConstant.imgContrast),
       TicketDetailsItemModel(contrast: ImageConstant.imgClose),
-      TicketDetailsItemModel(contrast: ImageConstant.imgCloseSecondarycontainer),
+      TicketDetailsItemModel(
+          contrast: ImageConstant.imgCloseSecondarycontainer),
       TicketDetailsItemModel(contrast: ImageConstant.imgContrast),
       TicketDetailsItemModel(contrast: ImageConstant.imgContrast),
       TicketDetailsItemModel(contrast: ImageConstant.imgClose),
@@ -120,8 +120,12 @@ class TicketDetailsBloc extends Bloc<TicketDetailsEvent, TicketDetailsState> {
   ) async {
     emit(state.copyWith(
         selected: false, notavailable: false, vip: false, regularFifty: false));
-    emit(state.copyWith(
-        ticketDetailsModelObj:
-            state.ticketDetailsModelObj?.copyWith(ticketDetailsItemList: fillSevenItemList())));
+    emit(
+      state.copyWith(
+        ticketDetailsModelObj: state.ticketDetailsModelObj?.copyWith(
+          ticketDetailsItemList: fillSevenItemList(),
+        ),
+      ),
+    );
   }
 }
