@@ -16,28 +16,35 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) async {
-          final String location = GoRouterState.of(context).matchedLocation;
-          if (!location.startsWith(homePath)) {
-            _onItemTapped(0, context);
-          }
-          return;
-        },
-        child: widget.child!,
-      ),
-      bottomNavigationBar: CustomBottomBar(
-        selectedIndex: _getSelectedIndex(context),
-        onTap: (index) => _onItemTapped(index, context),
-      ),
-    );
+        body: PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) async {
+            final String location = GoRouterState.of(context).matchedLocation;
+            if (!location.startsWith(homePath)) {
+              _onItemTapped(0, context);
+            }
+            return;
+          },
+          child: widget.child!,
+        ),
+        bottomNavigationBar: CustomBottomBar(
+          selectedIndex: _getSelectedIndex(context),
+          onTap: (index) => _onItemTapped(index, context),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.goNamed(AppRoutes.mqttScreen);
+          },
+          child: const Icon(Icons.message),
+        ));
   }
 
   int _getSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
     if (location.startsWith(homePath)) {
       return 0;
+    } else if (location.startsWith(searchPath)) {
+      return 1;
     }
     // if (location.startsWith(tvShowsPath)) {
     //   return 1;
@@ -57,7 +64,7 @@ class _MainPageState extends State<MainPage> {
         context.goNamed(AppRoutes.homeRoute);
         break;
       case 1:
-        context.goNamed(AppRoutes.movieDetailsRoute);
+        context.goNamed(AppRoutes.searchRoute);
         break;
       // case 2:
       //   context.goNamed(AppRoutes.searchRoute);

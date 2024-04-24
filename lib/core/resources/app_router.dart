@@ -5,6 +5,7 @@ import 'package:movieapp/core/presentation/pages/main_page.dart';
 import 'package:movieapp/presentation/Ticket_tab_container_screen/ticket_tab_container_screen.dart';
 import 'package:movieapp/presentation/home/home_screen.dart';
 import 'package:movieapp/presentation/movie_details/movie_details_screen.dart';
+import 'package:movieapp/presentation/mqtt/mqtt_screen.dart';
 import 'package:movieapp/presentation/ticket_detials/ticket_details_screen.dart';
 
 import '../../presentation/search/search_screen.dart';
@@ -15,6 +16,8 @@ const String searchPath = "search";
 
 const String seatBookingPath = "seatBook";
 const String seatBookingDetailsPath = "seatBookingDetails";
+
+const String mqttPath = "mqtt_screen";
 
 class AppRouter {
   GoRouter router = GoRouter(initialLocation: homePath, routes: [
@@ -53,6 +56,11 @@ class AppRouter {
                 path: seatBookingDetailsPath,
                 pageBuilder: (_, state) =>
                     CupertinoPage(child: TicketDetailsScreen()),
+              ),
+              GoRoute(
+                name: AppRoutes.mqttScreen,
+                path: mqttPath,
+                pageBuilder: (_, state) => CupertinoPage(child: MqttScreen()),
               ),
             ],
           ),

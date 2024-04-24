@@ -1,26 +1,32 @@
 import 'package:equatable/equatable.dart';
-import 'package:movieapp/core/utils/enums.dart';
 
+import '../../../../core/utils/enums.dart';
 import '../../models/video_model.dart';
 
 class VideoPlayerState extends Equatable {
-  const VideoPlayerState({this.videoList, this.status, this.message});
+  final RequestStatus status;
+  final String message;
   final List<VideoModel>? videoList;
-  final RequestStatus? status;
-  final String? message;
 
-  VideoPlayerState copyWith({
-    List<VideoModel>? videoList,
-    RequestStatus? status,
-    String? message,
-  }) {
-    return VideoPlayerState(
-      videoList: videoList ?? this.videoList,
-      status: status ?? this.status,
-      message: message ?? this.message,
-    );
-  }
+  const VideoPlayerState({
+    this.status = RequestStatus.loading,
+    this.message = '',
+    this.videoList,
+  });
 
   @override
-  List<Object?> get props => [videoList!, status!, message!];
+  List<Object?> get props =>
+      [status, message, videoList]; // Check if any of these are null
+
+  VideoPlayerState copyWith({
+    RequestStatus? status,
+    String? message,
+    List<VideoModel>? videoList,
+  }) {
+    return VideoPlayerState(
+      status: status ?? this.status,
+      message: message ?? this.message,
+      videoList: videoList ?? this.videoList,
+    );
+  }
 }

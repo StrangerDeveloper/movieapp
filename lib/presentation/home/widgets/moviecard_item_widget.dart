@@ -16,44 +16,40 @@ class MoviecardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180.v,
-      width: 335.h,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          CustomImageView(
-            imagePath: moviecardItemModelObj.backDropUrl,
-            height: 180.v,
-            width: 335.h,
-            radius: BorderRadius.circular(
-              10.h,
-            ),
-            alignment: Alignment.center,
-            onTap: () {
-              onTapImgMovieImage!.call();
-            },
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        CustomImageView(
+          imagePath: moviecardItemModelObj.backDropUrl,
+          // height: 180.v,
+          // width: 335.h,
+          radius: BorderRadius.circular(
+            20.h,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: 335.h,
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.h,
-                vertical: 15.v,
-              ),
-              decoration:
-                  AppDecoration.gradientErrorContainerToErrorContainer.copyWith(
-                borderRadius: BorderRadiusStyle.customBorderBL10,
-              ),
-              child: Text(
-                moviecardItemModelObj.title!,
-                style: CustomTextStyles.titleMedium18,
-              ),
-            ),
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(
+            horizontal: 10.h,
           ),
-        ],
-      ),
+          onTap: () {
+            onTapImgMovieImage!.call();
+          },
+        ),
+        Container(
+          width: 335.h,
+          padding: EdgeInsets.symmetric(
+            //horizontal: 5.h,
+            vertical: 25.v,
+          ),
+          // decoration:
+          //     AppDecoration.gradientErrorContainerToErrorContainer.copyWith(
+          //   borderRadius: BorderRadiusStyle.customBorderBL10,
+          // ),
+          child: Text(
+            moviecardItemModelObj.title!,
+            style: CustomTextStyles.titleMedium18,
+          ),
+        ),
+      ],
     );
   }
 }

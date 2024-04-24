@@ -24,6 +24,8 @@ class AppRoutes {
 
   static const String initialRoute = '/initialRoute';
 
+  static const String mqttScreen = '/mqtt_screen';
+
   // static Map<String, WidgetBuilder> get routes => {
   //       initialRoute: HomeScreen.builder,
   //       homeScreen: HomeScreen.builder,

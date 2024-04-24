@@ -16,44 +16,44 @@ class CustomBottomBarState extends State<CustomBottomBar> {
   //int selectedIndex = 0;
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
-      icon: ImageConstant.imgNavDashboard,
-      activeIcon: ImageConstant.imgNavDashboard,
-      title: "Dashboard",
-      type: BottomBarEnum.Dashboard,
+      icon: ImageConstant.home,
+      activeIcon: ImageConstant.home,
+      title: "Home",
+      type: BottomBarEnum.Home,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavWatch,
+      icon: ImageConstant.imgSearch,
       activeIcon: ImageConstant.imgNavWatch,
-      title: "Watch",
-      type: BottomBarEnum.Watch,
+      title: "Search",
+      type: BottomBarEnum.Search,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavMediaLibrary,
-      activeIcon: ImageConstant.imgNavMediaLibrary,
-      title: "Media Library",
-      type: BottomBarEnum.Medialibrary,
+      icon: ImageConstant.heart,
+      activeIcon: ImageConstant.heart,
+      title: "Favorites",
+      type: BottomBarEnum.Favorites,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNavMore,
-      activeIcon: ImageConstant.imgNavMore,
-      title: "More",
-      type: BottomBarEnum.More,
+      icon: ImageConstant.user,
+      activeIcon: ImageConstant.user,
+      title: "User",
+      type: BottomBarEnum.User,
     )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 75.v,
+      height: 65.v,
       decoration: BoxDecoration(
         color: appTheme.blueGray900,
         borderRadius: BorderRadius.circular(
-          27.h,
+          25.h,
         ),
       ),
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         selectedFontSize: 0,
         elevation: 0,
@@ -67,19 +67,19 @@ class CustomBottomBarState extends State<CustomBottomBar> {
               children: [
                 CustomImageView(
                   imagePath: bottomMenuList[index].icon,
-                  height: 18.adaptSize,
-                  width: 18.adaptSize,
-                  color: appTheme.whiteA700,
+                  // height: 28.adaptSize,
+                  // width: 28.adaptSize,
+                  color: appTheme.gray500,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5.v),
-                  child: Text(
-                    bottomMenuList[index].title ?? "",
-                    style: theme.textTheme.labelMedium!.copyWith(
-                      color: appTheme.whiteA700,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 5.v),
+                //   child: Text(
+                //     bottomMenuList[index].title ?? "",
+                //     style: theme.textTheme.labelMedium!.copyWith(
+                //       color: appTheme.whiteA700,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             activeIcon: Column(
@@ -106,12 +106,11 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                 ),
               ],
             ),
-            label: '',
+            label: bottomMenuList[index].title ?? "",
           );
         }),
         onTap: widget.onTap ??
             (index) {
-              //selectedIndex = index;
               widget.onChanged?.call(bottomMenuList[index].type);
               setState(() {});
             },
@@ -121,10 +120,10 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 }
 
 enum BottomBarEnum {
-  Dashboard,
-  Watch,
-  Medialibrary,
-  More,
+  Home,
+  Search,
+  Favorites,
+  User,
 }
 
 class BottomMenuModel {
@@ -142,28 +141,4 @@ class BottomMenuModel {
   String? title;
 
   BottomBarEnum type;
-}
-
-class DefaultWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Please replace the respective Widget here',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

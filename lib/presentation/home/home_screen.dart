@@ -68,17 +68,19 @@ class HomeScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-        height: 64.v,
-        title: AppbarTitle(text: 'Watch', margin: EdgeInsets.only(left: 22.h)),
-        actions: [
-          AppbarTrailingImage(
-              imagePath: ImageConstant.imgSearch,
-              margin: EdgeInsets.fromLTRB(13.h, 16.v, 13.h, 11.v),
-              onTap: () {
-                onTapSearch(context);
-              })
-        ],
-        styleType: Style.bgOutline);
+      height: 64.v,
+      title: AppbarTitle(text: 'Watch', margin: EdgeInsets.only(left: 22.h)),
+      actions: [
+        AppbarTrailingImage(
+          imagePath: ImageConstant.imgSearch,
+          margin: EdgeInsets.fromLTRB(13.h, 16.v, 13.h, 11.v),
+          onTap: () {
+            onTapSearch(context);
+          },
+        )
+      ],
+      //styleType: Style.bgOutline,
+    );
   }
 
   /// Navigates to the twoScreen when the action is triggered.

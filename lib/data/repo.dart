@@ -35,6 +35,7 @@ class MovieRepositoryImp extends MovieRepository {
 
   @override
   Future<MovieDetailModel> getMovieDetails(String id) async {
+    print("Movie detal id $id");
     var params = {"api_key": ApiConstants.apiKey, "language": "en-US"};
 
     Response response = await Dio()
@@ -51,6 +52,7 @@ class MovieRepositoryImp extends MovieRepository {
 
   @override
   Future<List<VideoModel>> getMovieTrailers(String movieId) async {
+    print("Movie trailer id $movieId");
     var params = {"api_key": ApiConstants.apiKey, "language": "en-US"};
 
     Response response = await Dio().get(
@@ -58,6 +60,7 @@ class MovieRepositoryImp extends MovieRepository {
         queryParameters: params);
 
     if (response.statusCode == 200) {
+      print("trailer response ${response.data}");
       return List<VideoModel>.from((response.data['results'] as List)
           .map((e) => VideoModel.fromJson(e)));
     }
@@ -66,14 +69,16 @@ class MovieRepositoryImp extends MovieRepository {
       errorMessageModel: ErrorMessageModel.fromJson(response.data),
     );
   }
-  
-  @override
-  Future<List<SearchResultItemModel>> search(String title) async{
-   var params = {"api_key": ApiConstants.apiKey, "query": "$title", };
 
-    Response response = await Dio().get(
-        "${ApiConstants.baseUrl}/search/multi",
-        queryParameters: params);
+  @override
+  Future<List<SearchResultItemModel>> search(String title) async {
+    var params = {
+      "api_key": ApiConstants.apiKey,
+      "query": "$title",
+    };
+
+    Response response = await Dio()
+        .get("${ApiConstants.baseUrl}/search/multi", queryParameters: params);
 
     if (response.statusCode == 200) {
       return List<SearchResultItemModel>.from((response.data['results'] as List)

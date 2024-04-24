@@ -12,23 +12,22 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     on<GetMovieTrailerEvent>(_getVideos);
   }
 
-  _getVideos(GetMovieTrailerEvent event, Emitter<VideoPlayerState> emit) async {
-    emit(
-      state.copyWith(
-        status: RequestStatus.loading,
-      ),
-    );
+  Future<void> _getVideos(
+    GetMovieTrailerEvent event,
+    Emitter<VideoPlayerState> emit,
+  ) async {
+    emit(state.copyWith(status: RequestStatus.loading, message: "Loading"));
 
-    final result = await movieRepository!.getMovieTrailers(event.movieID!);
+    try {
+      final result = await movieRepository!.getMovieTrailers(event.movieID!);
+      print("result $result");
 
-    result.fold(
-        (l) => emit(
-              state.copyWith(
-                status: RequestStatus.error,
-                message: l.message,
-              ),
-            ),
-        (previousValue, element) => emit(state
-            .copyWith(status: RequestStatus.loaded, videoList: [element])));
+      emit(state.copyWith(status: RequestStatus.loaded, videoList: result));
+    } catch (e) {
+      emit(state.copyWith(
+        status: RequestStatus.error,
+        message: "Error loading trailers: $e",
+      ));
+    }
   }
 }

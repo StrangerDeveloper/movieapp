@@ -5,6 +5,12 @@ class ImageConstant {
   // Two images
   static String imgRectangle2235 = '$imagePath/img_rectangle_2235.png';
 
+  static String home = '$imagePath/icons8-home.svg';
+
+  static String heart = '$imagePath/heart-16.png';
+
+  static String user = '$imagePath/user-16.png';
+
   static String imgRectangle2236 = '$imagePath/img_rectangle_2236.png';
 
   static String imgRectangle2237 = '$imagePath/img_rectangle_2237.png';

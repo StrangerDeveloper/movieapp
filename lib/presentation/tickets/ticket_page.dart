@@ -17,9 +17,7 @@ class TicketPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       body: BlocProvider(
-        create: (context) => TicketBloc(
-            TicketState())
-          ..add(SixInitialEvent()),
+        create: (context) => TicketBloc(TicketState())..add(SixInitialEvent()),
         child: Container(
           width: double.maxFinite,
           decoration: AppDecoration.fillGray,
@@ -69,22 +67,20 @@ class TicketPage extends StatelessWidget {
       Column(children: [
         SizedBox(
             height: 145.v,
-            child: BlocBuilder<TicketBloc, TicketState>(
-                
-                builder: (context, state) {
-                  return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(width: 10.h);
-                      },
-                      itemCount: state.ticketModel?.ticketItemList!.length ?? 0,
-                      itemBuilder: (context, index) {
-                        TicketItemModel model =
-                            state.ticketModel?.ticketItemList![index] ??
-                                TicketItemModel();
-                        return TicketItemWidget(model);
-                      });
-                })),
+            child:
+                BlocBuilder<TicketBloc, TicketState>(builder: (context, state) {
+              return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: 10.h);
+                  },
+                  itemCount: state.ticketModel?.ticketItemList!.length ?? 0,
+                  itemBuilder: (context, index) {
+                    TicketItemModel model = state
+                        .ticketModel?.ticketItemList![index] as TicketItemModel;
+                    return TicketItemWidget(model);
+                  });
+            })),
         SizedBox(height: 10.v),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           RichText(

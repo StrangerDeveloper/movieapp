@@ -7,7 +7,7 @@ class AppbarTitle extends StatelessWidget {
     Key? key,
     required this.text,
     this.margin,
-    this.onTap,
+    //this.onTap,
   }) : super(
           key: key,
         );
@@ -20,17 +20,12 @@ class AppbarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTap!.call();
-      },
-      child: Padding(
-        padding: margin ?? EdgeInsets.zero,
-        child: Text(
-          text,
-          style: CustomTextStyles.titleMediumPrimaryContainer_1.copyWith(
-            color: theme.colorScheme.primaryContainer,
-          ),
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Text(
+        text,
+        style: CustomTextStyles.titleMediumPrimaryContainer_1.copyWith(
+          color: theme.colorScheme.primaryContainer,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:movieapp/core/resources/app_colors.dart';
 import 'package:movieapp/core/utils/enums.dart';
 import 'package:movieapp/widgets/custom_search_view.dart';
 
+import '../../core/services/service_locator.dart';
 import 'bloc/search_bloc.dart';
 import 'models/grid_item_model.dart';
 import 'models/search_result_item_model.dart';
@@ -10,91 +11,85 @@ import 'package:movieapp/core/app_export.dart';
 
 import 'widgets/grid_item_widget.dart';
 import 'widgets/no_result.dart';
-import 'widgets/search_text.dart';
 
 class SeachScreen extends StatelessWidget {
   SeachScreen({Key? key}) : super(key: key);
-
-  // final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-
-  // static Widget builder(BuildContext context) {
-  //   return BlocProvider<TwoBloc>(
-  //     create: (context) => TwoBloc(TwoState(
-  //       twoModelObj: TwoModel(),
-  //     ))
-  //       ..add(TwoInitialEvent()),
-  //     child: TwoScreen(),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        //appBar: _buildAppBar(context),
-        body: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              CustomSearchView(
-                width: 334.h,
-                controller: TextEditingController(),
-                hintText: "Tv shows, Movies and more",
-                hintStyle: CustomTextStyles.bodyMediumPrimaryContainer,
-              ),
-              SizedBox(height: 30.v),
-              BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
-                switch (state.status) {
-                  case SearchRequestStatus.empty:
-                    return const SearchText();
-                  case SearchRequestStatus.loading:
-                    return const Expanded(
-                        child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
-                    ));
-                  case SearchRequestStatus.loaded:
-                    return _buildSearchGrid(results: state.searchResult);
-                  case SearchRequestStatus.error:
-                    return const Expanded(child: Text('Error'));
-                  case SearchRequestStatus.noResults:
-                    return Column(
-                      children: [
-                        const NoResult(),
-                        _buildGrid(context, state.gridItemList)
-                      ],
-                    );
-                  case null:
-                    return _buildGrid(context, state.gridItemList);
-                }
-              }),
-              //_buildGrid(context),
-            ],
+    return BlocProvider<SearchBloc>(
+      create: (context) => sl<SearchBloc>()..add(GetSearchResultsEvent("")),
+      child: SafeArea(
+        child: Scaffold(
+          body: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  CustomSearchView(
+                    width: 334.h,
+                    controller: TextEditingController(),
+                    hintText: "Tv shows, Movies and more",
+                    hintStyle: CustomTextStyles.bodyMediumPrimaryContainer,
+                    onSubmitted: (value) {
+                      context
+                          .read<SearchBloc>()
+                          .add(GetSearchResultsEvent(value));
+                    },
+                  ),
+                  SizedBox(height: 30.v),
+                  _buildSearchResultsText(state.searchResult),
+                  BlocBuilder<SearchBloc, SearchState>(
+                      builder: (context, state) {
+                    switch (state.status) {
+                      case SearchRequestStatus.empty:
+                        return Expanded(
+                          child: _buildGrid(context, state.gridItemList),
+                        );
+                      case SearchRequestStatus.loading:
+                        return const Expanded(
+                            child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                          ),
+                        ));
+                      case SearchRequestStatus.loaded:
+                        return _buildSearchGrid(results: state.searchResult);
+                      case SearchRequestStatus.error:
+                        return const Expanded(child: Text('Error'));
+                      case SearchRequestStatus.noResults:
+                        return const NoResult();
+                      case null:
+                        return _buildGrid(context, state.gridItemList);
+                    }
+                  }),
+                ],
+              );
+            },
           ),
         ),
       ),
     );
   }
 
-  /// Section Widget
-  // PreferredSizeWidget _buildAppBar(BuildContext context) {
-  //   return CustomAppBar(
-  //     centerTitle: true,
-  //     title: BlocSelector<TwoBloc, TwoState, TextEditingController?>(
-  //       selector: (state) => state.searchController,
-  //       builder: (context, searchController) {
-  //         return AppbarTitleSearchview(
-  //           hintText: "Tv Shows",
-  //           controller: searchController,
-  //         );
-  //       },
-  //     ),
-  //     styleType: Style.bgOutline,
-  //   );
-  // }
+  Widget _buildSearchResultsText(List<SearchResultItemModel>? results) {
+    if (results != null && results.isNotEmpty) {
+      return Align(
+        alignment: Alignment.topLeft,
+        child: Text(
+          "Results found: ${results.length}",
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            //color: AppColors.primary,
+          ),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  }
 
   /// Section Widget
   Widget _buildGrid(BuildContext context, List<GridItemModel> list) {
@@ -121,13 +116,13 @@ class SeachScreen extends StatelessWidget {
   Widget _buildSearchGrid({List<SearchResultItemModel>? results}) {
     return Expanded(
       child: GridView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 1),
         itemCount: results!.length,
         physics: const BouncingScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 12,
-          childAspectRatio: 0.55,
+          crossAxisCount: 1,
+          crossAxisSpacing: 1,
+          childAspectRatio: 2,
         ),
         itemBuilder: (context, index) {
           return _gridViewCard(context, results[index]);
@@ -138,36 +133,40 @@ class SeachScreen extends StatelessWidget {
 
   Widget _gridViewCard(context, SearchResultItemModel? item) {
     final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            context.pushNamed(AppRoutes.movieDetailsRoute,
-                params: {'movieId': item!.tmdbID.toString()});
-            // : context.pushNamed(AppRoutes.,
-            //     params: {'tvShowId': item.tmdbID.toString()});
-          },
-          child: AspectRatio(
-            aspectRatio: 2 / 3,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CustomImageView(
-                imagePath: item!.posterUrl,
-                width: double.infinity,
-                height: 150.v,
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: CustomImageView(
+              imagePath: item!.posterUrl,
+              width: 100,
+              height: 150,
             ),
           ),
-        ),
-        Expanded(
-          child: Text(
-            item.title!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium,
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.title ?? '',
+                  style: textTheme.bodyMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  "Your message here Your message here Your message here Your message here",
+                  style: textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
